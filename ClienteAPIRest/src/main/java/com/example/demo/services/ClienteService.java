@@ -1,6 +1,7 @@
 package com.example.demo.services;
 
 import com.example.demo.models.Cliente;
+import com.example.demo.models.ClienteDto;
 import com.example.demo.repository.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,17 +22,18 @@ public class ClienteService {
         return clienteRepository.findById(id).get();
     }
 
-    public Map<String, Object> getClienteConEdad(long id){
+    public ClienteDto getClienteConEdad(long id){
         Cliente cliente = clienteRepository.findById(id).get();
 
         int edad = Period.between(cliente.getFechaNacimiento(), LocalDate.now()).getYears();
 
-        Map<String, Object> clienteConEdad = new HashMap<>();
-        clienteConEdad.put("nombre", cliente.getNombre());
-        clienteConEdad.put("apellido", cliente.getApellido());
-        clienteConEdad.put("edad", edad);
+        ClienteDto clienteDto = new ClienteDto(
+                cliente.getNombre(),
+                cliente.getApellido(),
+                edad
+        );
 
-        return clienteConEdad;
+        return clienteDto;
     }
 
     public List<Cliente> getClientes(){
