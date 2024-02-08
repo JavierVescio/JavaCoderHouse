@@ -1,6 +1,7 @@
 package com.example.demo.controllers;
 
 import com.example.demo.models.Cliente;
+import com.example.demo.models.ClienteDto;
 import com.example.demo.services.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +23,7 @@ public class ClienteController {
     }*/
 
     @GetMapping(value="cliente/{id}")
-    public Map<String, Object> getClienteConEdad(@PathVariable Long id){
+    public ClienteDto getClienteConEdad(@PathVariable Long id){
         return clienteService.getClienteConEdad(id);
     }
 
