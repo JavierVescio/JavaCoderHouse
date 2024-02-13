@@ -2,6 +2,7 @@ package com.example.demo.controllers;
 
 import com.example.demo.models.Cliente;
 import com.example.demo.repository.ClienteRepository;
+import com.example.demo.services.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,33 +12,31 @@ import java.util.List;
 public class ClienteController {
 
     @Autowired
-    private ClienteRepository repo;
+    private ClienteService clienteService;
+
+    @GetMapping(value="api/cliente/{id}")
+    public Cliente getClienteById(@PathVariable Long id){
+        return clienteService.getClienteById(id);
+    }
 
     @GetMapping("api/cliente")
     public List<Cliente> getClientes(){
-        return  repo.findAll();
+        return  clienteService.getClientes();
     }
 
-    @PostMapping("api/cliente")
+    @PostMapping("api/cliente/alta")
     public String post(@RequestBody Cliente cliente){
-        repo.save(cliente);
-        return "Guardado";
+        return clienteService.altaCliente(cliente);
     }
 
-    @PutMapping("api/cliente/{id}")
+    @PutMapping("api/cliente/modificar/{id}")
     public String update(@PathVariable Long id, @RequestBody Cliente cliente){
-        Cliente updateCliente = repo.findById(id).get();
-        updateCliente.setNombre(cliente.getNombre());
-        updateCliente.setEmail(cliente.getEmail());
-        repo.save(updateCliente);
-        return "Modificado";
+        return clienteService.modificarCliente(id, cliente);
     }
 
-    @DeleteMapping("api/cliente/{id}")
-        public String delete(@PathVariable Long id){
-
-        Cliente deleteCliente = repo.findById(id).get();
-        repo.delete(deleteCliente);
+    @DeleteMapping("api/baja/{id}")
+    public String delete(@PathVariable Long id){
+        clienteService.eliminarCliente(id);
         return "Eliminado";
     }
 

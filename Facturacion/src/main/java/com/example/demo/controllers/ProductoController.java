@@ -1,7 +1,9 @@
 package com.example.demo.controllers;
 
+import com.example.demo.models.Cliente;
 import com.example.demo.models.Producto;
-import com.example.demo.repository.ProductoRepository;
+import com.example.demo.services.ClienteService;
+import com.example.demo.services.ProductoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,34 +13,31 @@ import java.util.List;
 public class ProductoController {
 
     @Autowired
-    private ProductoRepository repo;
+    private ProductoService productoService;
 
-    @GetMapping("api/productos")
+    @GetMapping(value="api/producto/{id}")
+    public Producto getProductoById(@PathVariable Long id){
+        return productoService.getProductoById(id);
+    }
+
+    @GetMapping("api/producto")
     public List<Producto> getProductos(){
-        return  repo.findAll();
+        return productoService.getProductos();
     }
 
-    @PostMapping("api/producto")
+    @PostMapping("api/producto/alta")
     public String post(@RequestBody Producto producto){
-        repo.save(producto);
-        return "Guardado";
+        return productoService.altaProducto(producto);
     }
 
-    @PutMapping("api/producto/{id}")
+    @PutMapping("api/producto/modificar/{id}")
     public String update(@PathVariable Long id, @RequestBody Producto producto){
-        Producto updateProducto = repo.findById(id).get();
-        updateProducto.setNombre(producto.getNombre());
-        updateProducto.setPrecio(producto.getPrecio());
-        updateProducto.setStock(producto.getStock());
-        repo.save(updateProducto);
-        return "Modificado";
+        return productoService.modificarProducto(id, producto);
     }
 
-    @DeleteMapping("api/producto/{id}")
-        public String delete(@PathVariable Long id){
-
-        Producto deleteProducto = repo.findById(id).get();
-        repo.delete(deleteProducto);
+    @DeleteMapping("api/producto/baja/{id}")
+    public String delete(@PathVariable Long id){
+        productoService.eliminarProducto(id);
         return "Eliminado";
     }
 
