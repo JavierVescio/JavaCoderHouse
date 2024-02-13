@@ -16,15 +16,21 @@ import java.time.LocalDateTime;
 public class ItemVenta {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Setter(AccessLevel.NONE)
     private Long id;
 
     @ManyToOne
+    @JoinColumn(name = "venta_id" )
     private Venta venta;
 
     @ManyToOne
+    @JoinColumn(name = "producto_id" )
     private Producto producto;
 
-    @Column(columnDefinition = "int default 1")
+    @Column()
     private int cantidad;
+
+    @Column()
+    private float subtotal;
 
 }
