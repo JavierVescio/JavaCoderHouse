@@ -20,15 +20,18 @@ public class ItemVenta {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "venta_id" )
+    @JoinColumn
     private Venta venta;
 
-    @ManyToOne
-    @JoinColumn(name = "producto_id" )
+    @ManyToOne()
+    @JoinColumn
     private Producto producto;
 
     @Column()
     private int cantidad;
+
+    @Column()
+    private float precio;
 
     @Column()
     private float subtotal;

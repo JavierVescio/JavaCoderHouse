@@ -27,20 +27,13 @@ public class Venta {
     private LocalDateTime fecha;
 
     @ManyToOne
-    @JoinColumn(name = "cliente_id" )
+    @JoinColumn
     private Cliente cliente;
-
-    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "venta")
-    private List<ItemVenta> items = new ArrayList<>();
 
     @Column(nullable = false)
     private float precioTotal = 0;
 
-    @Column(columnDefinition = "boolean default false")
+    @Column(columnDefinition = "boolean")
     private boolean confirmada = false;
 
-    public void addItemVenta(ItemVenta itemVenta){
-        items.add(itemVenta);
-        itemVenta.setVenta(this);
-    }
 }
