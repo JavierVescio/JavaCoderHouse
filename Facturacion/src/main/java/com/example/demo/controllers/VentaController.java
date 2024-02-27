@@ -31,20 +31,13 @@ public class VentaController {
         return ventaService.altaVenta(venta);
     }
 
-    @PostMapping("api/venta/item")
-    public String agregarItem(@RequestBody ItemVenta itemVenta){
-        return ventaService.agregarItemVenta(itemVenta);
-    }
-
-    @GetMapping("api/venta/item/{id}")
-    public List<ItemVenta> getVentas(Long id){
-        return ventaService.getItemsByVentaId(id);
-    }
-
-
     @PutMapping("api/venta/confirmar/{id}")
     public String confirmarVenta(@PathVariable Long id){
-        return ventaService.confirmar(id);
+        try {
+            return ventaService.confirmar(id);
+        } catch (Exception e) {
+            return e.getMessage();
+        }
     }
 
 }

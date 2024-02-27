@@ -34,7 +34,7 @@ public class ClienteController {
         return clienteService.modificarCliente(id, cliente);
     }
 
-    @DeleteMapping("api/baja/{id}")
+    @DeleteMapping("api/cliente/baja/{id}")
     public String delete(@PathVariable Long id){
         clienteService.eliminarCliente(id);
         return "Eliminado";
